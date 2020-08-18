@@ -1,0 +1,16 @@
+load("@bazel_gazelle//:def.bzl", "gazelle")
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+# gazelle:prefix github.com/lucasbergman/cmscal
+gazelle(name = "gazelle")
+
+go_library(
+    name = "cmscal",
+    srcs = [
+        "model.go",
+        "sched.go",
+    ],
+    importpath = "github.com/lucasbergman/cmscal",
+    visibility = ["//visibility:public"],
+    deps = ["@com_github_arran4_golang_ical//:go_default_library"],
+)

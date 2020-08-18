@@ -1,0 +1,4 @@
+/bazel-bin
+/bazel-cmscal
+/bazel-out
+/bazel-testlogs
