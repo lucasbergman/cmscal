@@ -1,6 +1,9 @@
 package cmscal
 
 import (
+	"crypto/sha1"
+	"encoding/base64"
+	"fmt"
 	"time"
 
 	ics "github.com/arran4/golang-ical"
@@ -46,7 +49,7 @@ func MakeHolidayMap(loc *time.Location) map[time.Time]bool {
 	return m
 }
 
-func ICalForSchedule(loc *time.Location, s Schedule) string {
+func ICalForSchedule(seed string, loc *time.Location, s Schedule) string {
 	cal := ics.NewCalendar()
 	cal.SetMethod(ics.MethodPublish)
 	cal.SetName("CMS Sixth Grade 2020-2021")
@@ -70,12 +73,20 @@ func ICalForSchedule(loc *time.Location, s Schedule) string {
 		}
 
 		for _, period := range s[currentDateType] {
-			// TODO: Fix unique ID for each event
 			// TODO: Add DTSTAMP to event
-			event := cal.AddEvent("foo")
 			start := date.Add(time.Duration(period.StartHour)*time.Hour + time.Duration(period.StartMinute)*time.Minute)
+			end := start.Add(period.Duration)
+
+			hasher := sha1.New()
+			hasher.Write([]byte(seed))
+			hasher.Write([]byte(start.String()))
+			hasher.Write([]byte(end.String()))
+			hash := base64.URLEncoding.EncodeToString(hasher.Sum(nil))
+
+			event := cal.AddEvent(fmt.Sprintf("%s@cmscal.bergmans.us", hash))
 			event.SetStartAt(start)
-			event.SetEndAt(start.Add(period.Duration))
+			event.SetEndAt(end)
+
 			event.SetDescription(period.Description)
 		}
 		currentDateType = (currentDateType + 1) % 2
