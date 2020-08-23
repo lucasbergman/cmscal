@@ -50,6 +50,8 @@ func MakeHolidayMap(loc *time.Location) map[time.Time]bool {
 }
 
 func ICalForSchedule(seed string, loc *time.Location, s Schedule) string {
+	now := time.Now()
+
 	cal := ics.NewCalendar()
 	cal.SetMethod(ics.MethodPublish)
 	cal.SetName("CMS Sixth Grade 2020-2021")
@@ -73,7 +75,6 @@ func ICalForSchedule(seed string, loc *time.Location, s Schedule) string {
 		}
 
 		for _, period := range s[currentDateType] {
-			// TODO: Add DTSTAMP to event
 			start := date.Add(time.Duration(period.StartHour)*time.Hour + time.Duration(period.StartMinute)*time.Minute)
 			end := start.Add(period.Duration)
 
@@ -84,6 +85,7 @@ func ICalForSchedule(seed string, loc *time.Location, s Schedule) string {
 			hash := base64.URLEncoding.EncodeToString(hasher.Sum(nil))
 
 			event := cal.AddEvent(fmt.Sprintf("%s@cmscal.bergmans.us", hash))
+			event.SetDtStampTime(now)
 			event.SetStartAt(start)
 			event.SetEndAt(end)
 
