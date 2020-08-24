@@ -4,5 +4,6 @@ go_binary(
     name = "cmscal",
     srcs = ["cmscal.go"],
     importpath = "github.com/lucasbergman/cmscal/cmd",
+    pure = "on",
     deps = ["//:cmscal"],
 )
