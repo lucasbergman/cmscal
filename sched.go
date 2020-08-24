@@ -53,9 +53,10 @@ func ICalForSchedule(seed string, loc *time.Location, s Schedule) string {
 	now := time.Now()
 
 	cal := ics.NewCalendar()
-	cal.SetMethod(ics.MethodPublish)
 	cal.SetName("CMS Sixth Grade 2020-2021")
 	cal.SetDescription("CMS Sixth Grade 2020-2021")
+	cal.SetXWRCalName("CMS Sixth Grade 2020-2021")
+	cal.SetXWRCalDesc("CMS Sixth Grade 2020-2021")
 
 	holidayMap := MakeHolidayMap(loc)
 	startDate := time.Date(2020, time.August, 17, 0, 0, 0, 0, loc)
@@ -88,7 +89,8 @@ func ICalForSchedule(seed string, loc *time.Location, s Schedule) string {
 			event.SetDtStampTime(now)
 			event.SetStartAt(start)
 			event.SetEndAt(end)
-
+			event.AddProperty(ics.ComponentProperty("TRANSP"), "TRANSPARENT")
+			event.SetSummary(period.Description)
 			event.SetDescription(period.Description)
 		}
 		currentDateType = (currentDateType + 1) % 2
