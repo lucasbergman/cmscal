@@ -31,7 +31,7 @@ func main() {
 	}
 
 	http.HandleFunc("/six", func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Add("Content-Type", "text/calendar")
+		w.Header().Add("Content-Type", "text/calendar; charset=utf-8")
 		fmt.Fprint(w, cmscal.ICalForSchedule(buildID, loc, cmscal.ScheduleSixth))
 	})
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", port), nil))
