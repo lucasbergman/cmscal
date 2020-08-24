@@ -1,0 +1,34 @@
+load("@io_bazel_rules_docker//container:container.bzl", "container_image", "container_push")
+load("@io_bazel_rules_docker//docker/util:run.bzl", "container_run_and_commit")
+
+container_run_and_commit(
+    name = "alpine_install",
+    commands = [
+        "apk add --no-cache bash ca-certificates tzdata",
+    ],
+    image = "@alpine_amd64//image",
+)
+
+container_image(
+    name = "cmscal",
+    base = ":alpine_install",
+    cmd = ["/cmscal", "-buildid=FIXME"],
+    files = ["//cmd:cmscal"],
+)
+
+container_push(
+    name = "cmscal_push",
+    format = "Docker",
+    image = ":cmscal",
+    registry = "gcr.io",
+    repository = "bergmans-test-287215/cmscal",
+    tag_file = ":tag",
+)
+
+genrule(
+    name = "gentag",
+    outs = ["tag"],
+    cmd = "./$(location gentag.sh) > \"$@\"",
+    stamp = True,
+    tools = ["gentag.sh"],
+)
