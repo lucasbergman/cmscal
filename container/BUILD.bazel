@@ -12,7 +12,7 @@ container_run_and_commit(
 container_image(
     name = "cmscal",
     base = ":alpine_install",
-    cmd = ["/cmscal", "-buildid=FIXME"],
+    cmd = ["/cmscal"],
     files = ["//cmd:cmscal"],
 )
 

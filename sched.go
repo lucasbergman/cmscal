@@ -2,7 +2,7 @@ package cmscal
 
 import (
 	"crypto/sha1"
-	"encoding/base64"
+	"encoding/hex"
 	"fmt"
 	"time"
 
@@ -49,7 +49,7 @@ func MakeHolidayMap(loc *time.Location) map[time.Time]bool {
 	return m
 }
 
-func ICalForSchedule(seed string, loc *time.Location, s Schedule) string {
+func ICalForSchedule(loc *time.Location, s Schedule) string {
 	now := time.Now()
 
 	cal := ics.NewCalendar()
@@ -80,10 +80,10 @@ func ICalForSchedule(seed string, loc *time.Location, s Schedule) string {
 			end := start.Add(period.Duration)
 
 			hasher := sha1.New()
-			hasher.Write([]byte(seed))
 			hasher.Write([]byte(start.String()))
 			hasher.Write([]byte(end.String()))
-			hash := base64.URLEncoding.EncodeToString(hasher.Sum(nil))
+			hasher.Write([]byte(period.Description))
+			hash := hex.EncodeToString(hasher.Sum(nil))
 
 			event := cal.AddEvent(fmt.Sprintf("%s@cmscal.bergmans.us", hash))
 			event.SetDtStampTime(now)

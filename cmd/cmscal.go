@@ -1,7 +1,6 @@
 package main
 
 import (
-	"flag"
 	"fmt"
 	"log"
 	"os"
@@ -18,13 +17,6 @@ func main() {
 		log.Fatalf("Failed to load time zone: %v", err)
 	}
 
-	var buildID string
-	flag.StringVar(&buildID, "buildid", "", "ID for this build, used for unique event IDs")
-	flag.Parse()
-	if buildID == "" {
-		log.Fatal("buildid flag value is required")
-	}
-
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8080"
@@ -32,7 +24,7 @@ func main() {
 
 	http.HandleFunc("/six", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Add("Content-Type", "text/calendar; charset=utf-8")
-		fmt.Fprint(w, cmscal.ICalForSchedule(buildID, loc, cmscal.ScheduleSixth))
+		fmt.Fprint(w, cmscal.ICalForSchedule(loc, cmscal.ScheduleSixth))
 	})
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", port), nil))
 }
