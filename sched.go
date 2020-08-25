@@ -53,10 +53,10 @@ func ICalForSchedule(loc *time.Location, s Schedule) string {
 	now := time.Now()
 
 	cal := ics.NewCalendar()
-	cal.SetName("CMS Sixth Grade 2020-2021")
-	cal.SetDescription("CMS Sixth Grade 2020-2021")
 	cal.SetXWRCalName("CMS Sixth Grade 2020-2021")
-	cal.SetXWRCalDesc("CMS Sixth Grade 2020-2021")
+	cal.SetXWRCalDesc("Block schedule for CMS Sixth Grade 2020-2021. Source code at <https://github.com/lucasbergman/cmscal>.")
+	cal.SetName("CMS Sixth Grade 2020-2021")
+	cal.SetDescription("Block schedule for CMS Sixth Grade 2020-2021. Source code at <https://github.com/lucasbergman/cmscal>.")
 
 	holidayMap := MakeHolidayMap(loc)
 	startDate := time.Date(2020, time.August, 17, 0, 0, 0, 0, loc)
