@@ -16,16 +16,24 @@ To build, you only need to install the [Bazel](https://bazel.build/)
 build system and run `bazel build`:
 
 ```console
-$ bazel build -c opt //cmd:cmscal
-INFO: Build option --compilation_mode has changed, discarding analysis cache.
-INFO: Analyzed target //cmd:cmscal (0 packages loaded, 6935 targets configured).
+$ bazel build -c opt //cmd/cmscal
+Starting local Bazel server and connecting to it...
+INFO: Analyzed target //cmd/cmscal:cmscal (38 packages loaded, 6935 targets configured).
 INFO: Found 1 target...
-Target //cmd:cmscal up-to-date:
-  bazel-out/k8-opt-ST-5e46445d989a/bin/cmd/cmscal_/cmscal
-INFO: Elapsed time: 9.828s, Critical Path: 9.36s
-INFO: 5 processes: 5 linux-sandbox.
-INFO: Build completed successfully, 8 total actions
+Target //cmd/cmscal:cmscal up-to-date:
+  bazel-out/k8-opt-ST-5e46445d989a/bin/cmd/cmscal/cmscal_/cmscal
+INFO: Elapsed time: 30.361s, Critical Path: 10.07s
+INFO: 7 processes: 7 linux-sandbox.
+INFO: Build completed successfully, 11 total actions
 ```
+
+If you already use Go, you can build with Go:
+
+```console
+$ go install -i github.com/lucasbergman/cmscal/cmd/cmscal
+$ PORT=12345 ~/go/bin/cmscal
+```
+
 Container builds are supported. You can build a container tar based on
 [Alpine Linux](https://alpinelinux.org/):
 

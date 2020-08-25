@@ -1,0 +1,10 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+
+go_binary(
+    name = "cmscal",
+    srcs = ["main.go"],
+    importpath = "github.com/lucasbergman/cmscal/cmd/cmscal",
+    pure = "on",
+    visibility = ["//visibility:public"],
+    deps = ["//:cmscal"],
+)

@@ -13,7 +13,7 @@ container_image(
     name = "cmscal",
     base = ":alpine_install",
     cmd = ["/cmscal"],
-    files = ["//cmd:cmscal"],
+    files = ["//cmd/cmscal"],
 )
 
 container_push(
