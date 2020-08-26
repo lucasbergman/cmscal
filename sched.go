@@ -9,28 +9,36 @@ import (
 	ics "github.com/arran4/golang-ical"
 )
 
-type Schedule map[DayScheduleType]DaySchedule
+type Schedule struct {
+	Name        string
+	Description string
+	ScheduleMap map[DayScheduleType]DaySchedule
+}
 
 var ScheduleSixth = Schedule{
-	BlueDay: DaySchedule{
-		{StartHour: 8, StartMinute: 47, Duration: time.Minute * 32, Description: "Advisory/Period 1"},
-		{StartHour: 9, StartMinute: 24, Duration: time.Minute * 90, Description: "Period 2"},
-		{StartHour: 10, StartMinute: 59, Duration: time.Minute * 45, Description: "Period 3"},
-		{StartHour: 11, StartMinute: 49, Duration: time.Minute * 30, Description: "Lunch"},
-		{StartHour: 12, StartMinute: 19, Duration: time.Minute * 45, Description: "Period 3"},
-		{StartHour: 13, StartMinute: 9, Duration: time.Minute * 90, Description: "Period 4"},
-		{StartHour: 14, StartMinute: 44, Duration: time.Minute * 45, Description: "Period 8"},
-		{StartHour: 15, StartMinute: 32, Duration: time.Minute * 8, Description: "Period 1"},
-	},
-	WhiteDay: DaySchedule{
-		{StartHour: 8, StartMinute: 47, Duration: time.Minute * 32, Description: "Advisory/Period 1"},
-		{StartHour: 9, StartMinute: 24, Duration: time.Minute * 90, Description: "Period 5"},
-		{StartHour: 10, StartMinute: 59, Duration: time.Minute * 45, Description: "Period 6"},
-		{StartHour: 11, StartMinute: 49, Duration: time.Minute * 30, Description: "Lunch"},
-		{StartHour: 12, StartMinute: 19, Duration: time.Minute * 45, Description: "Period 6"},
-		{StartHour: 13, StartMinute: 9, Duration: time.Minute * 90, Description: "Period 7"},
-		{StartHour: 14, StartMinute: 44, Duration: time.Minute * 45, Description: "Period 8"},
-		{StartHour: 15, StartMinute: 32, Duration: time.Minute * 8, Description: "Period 1"},
+	Name:        "CMS Sixth Grade 2020-2021",
+	Description: "Block schedule for CMS Sixth Grade 2020-2021",
+	ScheduleMap: map[DayScheduleType]DaySchedule{
+		BlueDay: {
+			{StartHour: 8, StartMinute: 47, Duration: time.Minute * 32, Description: "Advisory/Period 1"},
+			{StartHour: 9, StartMinute: 24, Duration: time.Minute * 90, Description: "Period 2"},
+			{StartHour: 10, StartMinute: 59, Duration: time.Minute * 45, Description: "Period 3"},
+			{StartHour: 11, StartMinute: 49, Duration: time.Minute * 30, Description: "Lunch"},
+			{StartHour: 12, StartMinute: 19, Duration: time.Minute * 45, Description: "Period 3"},
+			{StartHour: 13, StartMinute: 9, Duration: time.Minute * 90, Description: "Period 4"},
+			{StartHour: 14, StartMinute: 44, Duration: time.Minute * 45, Description: "Period 8"},
+			{StartHour: 15, StartMinute: 32, Duration: time.Minute * 8, Description: "Period 1"},
+		},
+		WhiteDay: {
+			{StartHour: 8, StartMinute: 47, Duration: time.Minute * 32, Description: "Advisory/Period 1"},
+			{StartHour: 9, StartMinute: 24, Duration: time.Minute * 90, Description: "Period 5"},
+			{StartHour: 10, StartMinute: 59, Duration: time.Minute * 45, Description: "Period 6"},
+			{StartHour: 11, StartMinute: 49, Duration: time.Minute * 30, Description: "Lunch"},
+			{StartHour: 12, StartMinute: 19, Duration: time.Minute * 45, Description: "Period 6"},
+			{StartHour: 13, StartMinute: 9, Duration: time.Minute * 90, Description: "Period 7"},
+			{StartHour: 14, StartMinute: 44, Duration: time.Minute * 45, Description: "Period 8"},
+			{StartHour: 15, StartMinute: 32, Duration: time.Minute * 8, Description: "Period 1"},
+		},
 	},
 }
 
@@ -53,10 +61,10 @@ func ICalForSchedule(loc *time.Location, s Schedule) string {
 	now := time.Now()
 
 	cal := ics.NewCalendar()
-	cal.SetXWRCalName("CMS Sixth Grade 2020-2021")
-	cal.SetXWRCalDesc("Block schedule for CMS Sixth Grade 2020-2021. Source code at <https://github.com/lucasbergman/cmscal>.")
-	cal.SetName("CMS Sixth Grade 2020-2021")
-	cal.SetDescription("Block schedule for CMS Sixth Grade 2020-2021. Source code at <https://github.com/lucasbergman/cmscal>.")
+	cal.SetXWRCalName(s.Name)
+	cal.SetXWRCalDesc(fmt.Sprintf("%s. Source code at <https://github.com/lucasbergman/cmscal>.", s.Description))
+	cal.SetName(s.Name)
+	cal.SetDescription(fmt.Sprintf("%s. Source code at <https://github.com/lucasbergman/cmscal>.", s.Description))
 
 	holidayMap := MakeHolidayMap(loc)
 	startDate := time.Date(2020, time.August, 17, 0, 0, 0, 0, loc)
@@ -75,7 +83,7 @@ func ICalForSchedule(loc *time.Location, s Schedule) string {
 			continue
 		}
 
-		for _, period := range s[currentDateType] {
+		for _, period := range s.ScheduleMap[currentDateType] {
 			start := date.Add(time.Duration(period.StartHour)*time.Hour + time.Duration(period.StartMinute)*time.Minute)
 			end := start.Add(period.Duration)
 
