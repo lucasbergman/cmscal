@@ -22,9 +22,10 @@ func main() {
 		port = "8080"
 	}
 
+	calSixth := cmscal.ICalForSchedule(loc, cmscal.ScheduleSixth)
 	http.HandleFunc("/six", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Add("Content-Type", "text/calendar; charset=utf-8")
-		fmt.Fprint(w, cmscal.ICalForSchedule(loc, cmscal.ScheduleSixth))
+		fmt.Fprint(w, calSixth)
 	})
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", port), nil))
 }
