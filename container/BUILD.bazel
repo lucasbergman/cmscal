@@ -25,10 +25,23 @@ container_push(
     tag_file = ":tag",
 )
 
+# We're using an undocumented[1] Bazel trick to generate a Docker image tag
+# with information about the Git commit at HEAD. The workspace bazelrc adds
+# workspace_status_command=container/bazelstatus.sh to the build command.
+# Setting stamp=True here makes workspace status a dependency of this rule;
+# otherwise, volatile-status.txt might not be available. This genrule sucks
+# the commit data out of volatile-status.txt and dumps it in an output file we
+# can use in the container_push rule above.
+#
+# There's a kink here, which is that the build isn't re-run if only the stamp
+# changed, so if you run the build on uncommitted code, then commit and
+# re-run, the build stamp will have changed but the build won't do anything.
+#
+# 1. https://github.com/bazelbuild/bazel/issues/4942
 genrule(
     name = "gentag",
     outs = ["tag"],
     cmd = "./$(location gentag.sh) > \"$@\"",
     stamp = True,
-    tools = ["gentag.sh"],
+    exec_tools = ["gentag.sh"],
 )
