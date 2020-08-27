@@ -45,6 +45,7 @@ var ScheduleSixth = Schedule{
 func MakeHolidayMap(loc *time.Location) map[time.Time]bool {
 	m := make(map[time.Time]bool)
 	holidays := []time.Time{
+		time.Date(2020, time.September, 7, 0, 0, 0, 0, loc),
 		time.Date(2020, time.November, 2, 0, 0, 0, 0, loc),
 		time.Date(2020, time.November, 3, 0, 0, 0, 0, loc),
 		time.Date(2020, time.November, 25, 0, 0, 0, 0, loc),
