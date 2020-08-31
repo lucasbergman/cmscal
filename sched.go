@@ -9,13 +9,20 @@ import (
 	ics "github.com/arran4/golang-ical"
 )
 
-type Schedule struct {
+type GradeSchedule struct {
 	Name        string
 	Description string
 	ScheduleMap map[DayScheduleType]DaySchedule
 }
 
-var ScheduleSixth = Schedule{
+type BuildingSchedule struct {
+	startDate    time.Time
+	numWeekdays  int
+	firstDayType DayScheduleType
+	holidays     map[time.Time]bool
+}
+
+var ScheduleSixth = GradeSchedule{
 	Name:        "CMS Sixth Grade 2020-2021",
 	Description: "Block schedule for CMS Sixth Grade 2020-2021",
 	ScheduleMap: map[DayScheduleType]DaySchedule{
@@ -42,49 +49,55 @@ var ScheduleSixth = Schedule{
 	},
 }
 
-func MakeHolidayMap(loc *time.Location) map[time.Time]bool {
+func makeHolidayMap(loc *time.Location) map[time.Time]bool {
 	m := make(map[time.Time]bool)
-	holidays := []time.Time{
+	for _, h := range []time.Time{
 		time.Date(2020, time.September, 7, 0, 0, 0, 0, loc),
 		time.Date(2020, time.November, 2, 0, 0, 0, 0, loc),
 		time.Date(2020, time.November, 3, 0, 0, 0, 0, loc),
 		time.Date(2020, time.November, 25, 0, 0, 0, 0, loc),
 		time.Date(2020, time.November, 26, 0, 0, 0, 0, loc),
 		time.Date(2020, time.November, 27, 0, 0, 0, 0, loc),
-	}
-	for _, h := range holidays {
+	} {
 		m[h] = true
 	}
 	return m
 }
 
-func ICalForSchedule(loc *time.Location, s Schedule) string {
+func MakeBuildingSchedule(loc *time.Location) *BuildingSchedule {
+	return &BuildingSchedule{
+		startDate:    time.Date(2020, time.August, 17, 0, 0, 0, 0, loc),
+		numWeekdays:  90,
+		firstDayType: BlueDay,
+		holidays:     makeHolidayMap(loc),
+	}
+}
+
+func ICalForSchedule(bs *BuildingSchedule, gs *GradeSchedule) string {
 	now := time.Now()
 
 	cal := ics.NewCalendar()
-	cal.SetXWRCalName(s.Name)
-	cal.SetXWRCalDesc(fmt.Sprintf("%s. Source code at <https://github.com/lucasbergman/cmscal>.", s.Description))
-	cal.SetName(s.Name)
-	cal.SetDescription(fmt.Sprintf("%s. Source code at <https://github.com/lucasbergman/cmscal>.", s.Description))
+	cal.SetXWRCalName(gs.Name)
+	cal.SetXWRCalDesc(fmt.Sprintf("%s. Source code at <https://github.com/lucasbergman/cmscal>.", gs.Description))
+	cal.SetName(gs.Name)
+	cal.SetDescription(fmt.Sprintf("%s. Source code at <https://github.com/lucasbergman/cmscal>.", gs.Description))
 
-	holidayMap := MakeHolidayMap(loc)
-	startDate := time.Date(2020, time.August, 17, 0, 0, 0, 0, loc)
+	startDate := bs.startDate
 	daysFromStart := 0
-	currentDateType := BlueDay
-	const totalWeekdays = 90
+	currentDayType := bs.firstDayType
 	weekdaysDone := 0
-	for weekdaysDone < totalWeekdays {
+	for weekdaysDone < bs.numWeekdays {
 		date := startDate.AddDate(0, 0, daysFromStart)
 		daysFromStart += 1
 		if date.Weekday() == time.Saturday || date.Weekday() == time.Sunday {
 			continue
 		}
 		weekdaysDone += 1
-		if _, present := holidayMap[date]; present {
+		if _, present := bs.holidays[date]; present {
 			continue
 		}
 
-		for _, period := range s.ScheduleMap[currentDateType] {
+		for _, period := range gs.ScheduleMap[currentDayType] {
 			start := date.Add(time.Duration(period.StartHour)*time.Hour + time.Duration(period.StartMinute)*time.Minute)
 			end := start.Add(period.Duration)
 
@@ -102,7 +115,7 @@ func ICalForSchedule(loc *time.Location, s Schedule) string {
 			event.SetSummary(period.Description)
 			event.SetDescription(period.Description)
 		}
-		currentDateType = (currentDateType + 1) % 2
+		currentDayType = (currentDayType + 1) % 2
 	}
 
 	return cal.Serialize()
