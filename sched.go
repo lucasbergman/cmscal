@@ -12,7 +12,7 @@ import (
 var ScheduleSixth = GradeSchedule{
 	Name:        "CMS Sixth Grade 2020-2021",
 	Description: "Block schedule for CMS Sixth Grade 2020-2021",
-	ScheduleMap: map[DayScheduleType]DaySchedule{
+	ScheduleMap: map[BlockDayType]DaySchedule{
 		BlueDay: {
 			{StartHour: 8, StartMinute: 47, Duration: time.Minute * 32, Description: "Advisory/Period 1"},
 			{StartHour: 9, StartMinute: 24, Duration: time.Minute * 90, Description: "Period 2"},
@@ -33,13 +33,25 @@ var ScheduleSixth = GradeSchedule{
 			{StartHour: 14, StartMinute: 44, Duration: time.Minute * 45, Description: "Period 8"},
 			{StartHour: 15, StartMinute: 32, Duration: time.Minute * 8, Description: "Period 1"},
 		},
+		NonBlockDay: {
+			{StartHour: 8, StartMinute: 47, Duration: time.Minute * 25, Description: "Advisory/Period 1"},
+			{StartHour: 9, StartMinute: 12, Duration: time.Minute * 45, Description: "Period 2"},
+			{StartHour: 10, StartMinute: 2, Duration: time.Minute * 45, Description: "Period 3"},
+			{StartHour: 10, StartMinute: 52, Duration: time.Minute * 30, Description: "Lunch"},
+			{StartHour: 11, StartMinute: 27, Duration: time.Minute * 50, Description: "Period 4"},
+			{StartHour: 12, StartMinute: 17, Duration: time.Minute * 45, Description: "Period 5"},
+			{StartHour: 13, StartMinute: 7, Duration: time.Minute * 45, Description: "Period 6"},
+			{StartHour: 13, StartMinute: 57, Duration: time.Minute * 45, Description: "Period 7"},
+			{StartHour: 14, StartMinute: 47, Duration: time.Minute * 45, Description: "Period 8"},
+			{StartHour: 15, StartMinute: 35, Duration: time.Minute * 5, Description: "Period 1 (Return Chromebooks)"},
+		},
 	},
 }
 
 var ScheduleSeventh = GradeSchedule{
 	Name:        "CMS Seventh Grade 2020-2021",
 	Description: "Block schedule for CMS Seventh Grade 2020-2021",
-	ScheduleMap: map[DayScheduleType]DaySchedule{
+	ScheduleMap: map[BlockDayType]DaySchedule{
 		BlueDay: {
 			{StartHour: 8, StartMinute: 47, Duration: time.Minute * 32, Description: "Advisory/Period 1"},
 			{StartHour: 9, StartMinute: 24, Duration: time.Minute * 90, Description: "Period 2"},
@@ -58,13 +70,25 @@ var ScheduleSeventh = GradeSchedule{
 			{StartHour: 14, StartMinute: 44, Duration: time.Minute * 45, Description: "Period 8"},
 			{StartHour: 15, StartMinute: 32, Duration: time.Minute * 8, Description: "Period 1"},
 		},
+		NonBlockDay: {
+			{StartHour: 8, StartMinute: 47, Duration: time.Minute * 25, Description: "Advisory/Period 1"},
+			{StartHour: 9, StartMinute: 12, Duration: time.Minute * 45, Description: "Period 2"},
+			{StartHour: 10, StartMinute: 2, Duration: time.Minute * 45, Description: "Period 3"},
+			{StartHour: 10, StartMinute: 52, Duration: time.Minute * 45, Description: "Period 4"},
+			{StartHour: 11, StartMinute: 42, Duration: time.Minute * 30, Description: "Lunch"},
+			{StartHour: 12, StartMinute: 17, Duration: time.Minute * 45, Description: "Period 5"},
+			{StartHour: 13, StartMinute: 7, Duration: time.Minute * 45, Description: "Period 6"},
+			{StartHour: 13, StartMinute: 57, Duration: time.Minute * 45, Description: "Period 7"},
+			{StartHour: 14, StartMinute: 47, Duration: time.Minute * 45, Description: "Period 8"},
+			{StartHour: 15, StartMinute: 35, Duration: time.Minute * 5, Description: "Period 1 (Return Chromebooks)"},
+		},
 	},
 }
 
 var ScheduleEighth = GradeSchedule{
 	Name:        "CMS Eighth Grade 2020-2021",
 	Description: "Block schedule for CMS Eighth Grade 2020-2021",
-	ScheduleMap: map[DayScheduleType]DaySchedule{
+	ScheduleMap: map[BlockDayType]DaySchedule{
 		BlueDay: {
 			{StartHour: 8, StartMinute: 47, Duration: time.Minute * 32, Description: "Advisory/Period 1"},
 			{StartHour: 9, StartMinute: 24, Duration: time.Minute * 90, Description: "Period 2"},
@@ -82,6 +106,18 @@ var ScheduleEighth = GradeSchedule{
 			{StartHour: 13, StartMinute: 9, Duration: time.Minute * 90, Description: "Period 7"},
 			{StartHour: 14, StartMinute: 44, Duration: time.Minute * 45, Description: "Period 8"},
 			{StartHour: 15, StartMinute: 32, Duration: time.Minute * 8, Description: "Period 1"},
+		},
+		NonBlockDay: {
+			{StartHour: 8, StartMinute: 47, Duration: time.Minute * 25, Description: "Advisory/Period 1"},
+			{StartHour: 9, StartMinute: 12, Duration: time.Minute * 45, Description: "Period 2"},
+			{StartHour: 10, StartMinute: 2, Duration: time.Minute * 45, Description: "Period 3"},
+			{StartHour: 10, StartMinute: 52, Duration: time.Minute * 45, Description: "Period 4"},
+			{StartHour: 11, StartMinute: 42, Duration: time.Minute * 45, Description: "Period 5"},
+			{StartHour: 12, StartMinute: 32, Duration: time.Minute * 30, Description: "Lunch"},
+			{StartHour: 13, StartMinute: 7, Duration: time.Minute * 45, Description: "Period 6"},
+			{StartHour: 13, StartMinute: 57, Duration: time.Minute * 45, Description: "Period 7"},
+			{StartHour: 14, StartMinute: 47, Duration: time.Minute * 45, Description: "Period 8"},
+			{StartHour: 15, StartMinute: 35, Duration: time.Minute * 5, Description: "Period 1 (Return Chromebooks)"},
 		},
 	},
 }
@@ -103,10 +139,11 @@ func makeHolidayMap(loc *time.Location) map[time.Time]bool {
 
 func MakeBuildingSchedule(loc *time.Location) *BuildingSchedule {
 	return &BuildingSchedule{
-		startDate:    time.Date(2020, time.August, 17, 0, 0, 0, 0, loc),
-		numWeekdays:  90,
-		firstDayType: BlueDay,
-		holidays:     makeHolidayMap(loc),
+		startDate:          time.Date(2020, time.August, 17, 0, 0, 0, 0, loc),
+		numWeekdays:        90,
+		firstDayType:       BlueDay,
+		holidays:           makeHolidayMap(loc),
+		arbitraryChangeDay: time.Date(2020, time.September, 4, 0, 0, 0, 0, loc),
 	}
 }
 
@@ -152,7 +189,7 @@ func ICalForSchedule(bs *BuildingSchedule, gs *GradeSchedule) string {
 			event.SetSummary(period.Description)
 			event.SetDescription(period.Description)
 		}
-		currentDayType = (currentDayType + 1) % 2
+		currentDayType = nextDayType(bs, currentDayType, date)
 	}
 
 	return cal.Serialize()
