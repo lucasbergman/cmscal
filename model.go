@@ -21,3 +21,16 @@ type ClassPeriod struct {
 }
 
 type DaySchedule []ClassPeriod
+
+type GradeSchedule struct {
+	Name        string
+	Description string
+	ScheduleMap map[DayScheduleType]DaySchedule
+}
+
+type BuildingSchedule struct {
+	startDate    time.Time
+	numWeekdays  int
+	firstDayType DayScheduleType
+	holidays     map[time.Time]bool
+}

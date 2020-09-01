@@ -9,19 +9,6 @@ import (
 	ics "github.com/arran4/golang-ical"
 )
 
-type GradeSchedule struct {
-	Name        string
-	Description string
-	ScheduleMap map[DayScheduleType]DaySchedule
-}
-
-type BuildingSchedule struct {
-	startDate    time.Time
-	numWeekdays  int
-	firstDayType DayScheduleType
-	holidays     map[time.Time]bool
-}
-
 var ScheduleSixth = GradeSchedule{
 	Name:        "CMS Sixth Grade 2020-2021",
 	Description: "Block schedule for CMS Sixth Grade 2020-2021",
