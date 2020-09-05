@@ -40,6 +40,9 @@ func main() {
 	http.HandleFunc("/7", calServer(calSeventh))
 	http.HandleFunc("/eight", calServer(calEighth))
 	http.HandleFunc("/8", calServer(calEighth))
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		http.Redirect(w, r, "https://lucasbergman.github.io/cmscal/", http.StatusFound)
+	})
 
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", port), nil))
 }
