@@ -45,6 +45,17 @@ var ScheduleSixth = GradeSchedule{
 			{StartHour: 14, StartMinute: 47, Duration: time.Minute * 45, Description: "Period 8"},
 			{StartHour: 15, StartMinute: 35, Duration: time.Minute * 5, Description: "Period 1 (Return Chromebooks)"},
 		},
+		ShortWednesday: {
+			{StartHour: 8, StartMinute: 47, Duration: time.Minute * 35, Description: "Period 2"},
+			{StartHour: 9, StartMinute: 27, Duration: time.Minute * 35, Description: "Period 3"},
+			{StartHour: 10, StartMinute: 7, Duration: time.Minute * 30, Description: "Lunch"},
+			{StartHour: 10, StartMinute: 42, Duration: time.Minute * 35, Description: "Period 4"},
+			{StartHour: 11, StartMinute: 22, Duration: time.Minute * 35, Description: "Period 5"},
+			{StartHour: 12, StartMinute: 2, Duration: time.Minute * 35, Description: "Period 6"},
+			{StartHour: 12, StartMinute: 42, Duration: time.Minute * 35, Description: "Period 7"},
+			{StartHour: 13, StartMinute: 22, Duration: time.Minute * 35, Description: "Period 8"},
+			{StartHour: 14, StartMinute: 0, Duration: time.Minute * 5, Description: "Period 1 (Return Chromebooks)"},
+		},
 	},
 }
 
@@ -82,6 +93,17 @@ var ScheduleSeventh = GradeSchedule{
 			{StartHour: 14, StartMinute: 47, Duration: time.Minute * 45, Description: "Period 8"},
 			{StartHour: 15, StartMinute: 35, Duration: time.Minute * 5, Description: "Period 1 (Return Chromebooks)"},
 		},
+		ShortWednesday: {
+			{StartHour: 8, StartMinute: 47, Duration: time.Minute * 35, Description: "Period 2"},
+			{StartHour: 9, StartMinute: 27, Duration: time.Minute * 35, Description: "Period 3"},
+			{StartHour: 10, StartMinute: 7, Duration: time.Minute * 35, Description: "Period 4"},
+			{StartHour: 10, StartMinute: 47, Duration: time.Minute * 30, Description: "Lunch"},
+			{StartHour: 11, StartMinute: 22, Duration: time.Minute * 35, Description: "Period 5"},
+			{StartHour: 12, StartMinute: 2, Duration: time.Minute * 35, Description: "Period 6"},
+			{StartHour: 12, StartMinute: 42, Duration: time.Minute * 35, Description: "Period 7"},
+			{StartHour: 13, StartMinute: 22, Duration: time.Minute * 35, Description: "Period 8"},
+			{StartHour: 14, StartMinute: 0, Duration: time.Minute * 5, Description: "Period 1 (Return Chromebooks)"},
+		},
 	},
 }
 
@@ -118,6 +140,17 @@ var ScheduleEighth = GradeSchedule{
 			{StartHour: 13, StartMinute: 57, Duration: time.Minute * 45, Description: "Period 7"},
 			{StartHour: 14, StartMinute: 47, Duration: time.Minute * 45, Description: "Period 8"},
 			{StartHour: 15, StartMinute: 35, Duration: time.Minute * 5, Description: "Period 1 (Return Chromebooks)"},
+		},
+		ShortWednesday: {
+			{StartHour: 8, StartMinute: 47, Duration: time.Minute * 35, Description: "Period 2"},
+			{StartHour: 9, StartMinute: 27, Duration: time.Minute * 35, Description: "Period 3"},
+			{StartHour: 10, StartMinute: 7, Duration: time.Minute * 35, Description: "Period 4"},
+			{StartHour: 10, StartMinute: 47, Duration: time.Minute * 35, Description: "Period 5"},
+			{StartHour: 11, StartMinute: 27, Duration: time.Minute * 30, Description: "Lunch"},
+			{StartHour: 12, StartMinute: 2, Duration: time.Minute * 35, Description: "Period 6"},
+			{StartHour: 12, StartMinute: 42, Duration: time.Minute * 35, Description: "Period 7"},
+			{StartHour: 13, StartMinute: 22, Duration: time.Minute * 35, Description: "Period 8"},
+			{StartHour: 14, StartMinute: 0, Duration: time.Minute * 5, Description: "Period 1 (Return Chromebooks)"},
 		},
 	},
 }

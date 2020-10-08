@@ -8,6 +8,7 @@ const (
 	BlueDay BlockDayType = iota
 	WhiteDay
 	NonBlockDay
+	ShortWednesday
 )
 
 func (t BlockDayType) String() string {
