@@ -12,5 +12,5 @@ go_library(
     ],
     importpath = "github.com/lucasbergman/cmscal",
     visibility = ["//visibility:public"],
-    deps = ["@com_github_arran4_golang_ical//:go_default_library"],
+    deps = ["@com_github_arran4_golang_ical//:golang-ical"],
 )
