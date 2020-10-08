@@ -172,11 +172,12 @@ func makeHolidayMap(loc *time.Location) map[time.Time]bool {
 
 func MakeBuildingSchedule(loc *time.Location) *BuildingSchedule {
 	return &BuildingSchedule{
-		startDate:          time.Date(2020, time.August, 17, 0, 0, 0, 0, loc),
-		numWeekdays:        90,
-		firstDayType:       BlueDay,
-		holidays:           makeHolidayMap(loc),
-		arbitraryChangeDay: time.Date(2020, time.September, 4, 0, 0, 0, 0, loc),
+		startDate:               time.Date(2020, time.August, 17, 0, 0, 0, 0, loc),
+		numWeekdays:             90,
+		firstDayType:            BlueDay,
+		holidays:                makeHolidayMap(loc),
+		nonBlockChangeDay:       time.Date(2020, time.September, 4, 0, 0, 0, 0, loc),
+		shortWednesdayChangeDay: time.Date(2020, time.October, 12, 0, 0, 0, 0, loc),
 	}
 }
 
