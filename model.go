@@ -12,7 +12,7 @@ const (
 )
 
 func (t BlockDayType) String() string {
-	return []string{"BLUE DAY", "WHITE DAY", "DAILY SCHEDULE"}[t]
+	return []string{"BLUE DAY", "WHITE DAY", "DAILY SCHEDULE", "SHORT WEDNESDAY"}[t]
 }
 
 type ClassPeriod struct {
