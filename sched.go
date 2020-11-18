@@ -192,8 +192,8 @@ func ICalForSchedule(bs *BuildingSchedule, gs *GradeSchedule) string {
 
 	startDate := bs.startDate
 	daysFromStart := 0
-	currentDayType := bs.firstDayType
 	weekdaysDone := 0
+	var currentDayType BlockDayType
 	for weekdaysDone < bs.numWeekdays {
 		date := startDate.AddDate(0, 0, daysFromStart)
 		daysFromStart += 1
@@ -203,6 +203,12 @@ func ICalForSchedule(bs *BuildingSchedule, gs *GradeSchedule) string {
 		weekdaysDone += 1
 		if _, present := bs.holidays[date]; present {
 			continue
+		}
+
+		if weekdaysDone == 1 {
+			currentDayType = bs.firstDayType
+		} else {
+			currentDayType = nextDayType(bs, currentDayType, date)
 		}
 
 		for _, period := range gs.ScheduleMap[currentDayType] {
@@ -223,7 +229,6 @@ func ICalForSchedule(bs *BuildingSchedule, gs *GradeSchedule) string {
 			event.SetSummary(period.Description)
 			event.SetDescription(period.Description)
 		}
-		currentDayType = nextDayType(bs, currentDayType, date)
 	}
 
 	return cal.Serialize()

@@ -44,11 +44,10 @@ type BuildingSchedule struct {
 }
 
 func nextDayType(bs *BuildingSchedule, yesterday BlockDayType, today time.Time) BlockDayType {
-	tomorrow := today.AddDate(0, 0, 1)
-	if tomorrow.After(bs.shortWednesdayChangeDay) && tomorrow.Weekday() == time.Wednesday {
+	if today.After(bs.shortWednesdayChangeDay) && today.Weekday() == time.Wednesday {
 		return ShortWednesday
 	}
-	if tomorrow.After(bs.nonBlockChangeDay) {
+	if today.After(bs.nonBlockChangeDay) {
 		return NonBlockDay
 	}
 	if yesterday == WhiteDay {
